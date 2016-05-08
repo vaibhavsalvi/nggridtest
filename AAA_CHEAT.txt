@@ -1,0 +1,103 @@
+3 STEPS, start MongoDB, Express, launch html page
+
+STEP 1: Start Mongo DB server
+
+Start MongoDb
+cd C:\Program Files\MongoDB\Server\3.2\bin
+type mongod
+This will start mongodb server
+
+STEP 2: Start Express server
+
+Start Express server, basically web server
+cd C:\Users\vaibhav\Source\Repos\NodeMVA\08_ExpressREST
+Type node app.js
+
+----
+----
+var express = require('express');
+var app = express();
+var MongoClient = require('mongodb').MongoClient;
+var Server=require('mongodb').Server;
+
+app.get('/', function (req, res) {
+;
+var url = 'mongodb://localhost:27017/test';
+MongoClient.connect(url, function(err, db) {
+
+	console.log(db.collection("newmongo3").find().count());
+    db.collection("newmongo3").find().count(function(err,valueret){
+	console.log(valueret);
+	if (1==1)
+	{
+	{
+	    console.log("found");
+		db.collection('newmongo3').find().toArray(function(err,results){
+		    console.log("returned");
+			 res.jsonp([{name: "XXX", age: 50},
+					 {name: "YYY", age: 43},
+					 {name: "ZZZ", age: 27},
+					 {name: "AAA", age: 29},
+					 {name: "BBB", age: 34}]); 
+		});
+		
+	}
+	}
+	else
+	{  console.log("not found");
+	    db.collection("newmongo4").insert([{name: "XXX", age: 50},
+					 {name: "YYY", age: 43},
+					 {name: "ZZZ", age: 27},
+					 {name: "AAA", age: 29},
+					 {name: "BBB", age: 34}], function(err, docs){
+		if(err){
+		    console.log('Error');
+			console.log("Error inserting documents in MongoDB : " + JSON.stringify(err));
+		}
+		if(docs){
+		console.log('Returned Value');
+			 res.jsonp[JSON.stringify(docs)];
+		}});
+	}	
+	});
+	res.jsonp[[{name: "XXX", age: 50},
+					 {name: "YYY", age: 43},
+					 {name: "ZZZ", age: 27},
+					 {name: "AAA", age: 29},
+					 {name: "BBB", age: 34}]];
+});
+
+					 
+});
+
+var server = app.listen(8081, function () {
+    
+    var host = server.address().address;
+	console.log(host);
+    var port = server.address().port;
+	console.log(port);
+    
+    console.log("Example app listening at http://%s:%s", host, port)
+
+})
+----
+
+Launch the html page
+C:\Users\vaibhav\Documents\GitHub\nggridtest\ui-grid\src\js\index.html
+
+<!doctype html>
+<html ng-app="myApp">  
+    <head lang="en">
+        <meta charset="utf-8">
+        <title>Getting Started With ngGrid Example</title>  
+        <link rel="stylesheet" type="text/css" href="..\..\node_modules\angular-ui-grid\ui-grid.css" />
+        <link rel="stylesheet" type="text/css" href="style.css" />
+        <script type="text/javascript" src="..\..\bower_components\jquery\jquery.js"></script>
+        <script type="text/javascript" src="..\..\node_modules\angular\angular.js"></script>
+        <script type="text/javascript" src="..\..\node_modules\angular-ui-grid\ui-grid.js"></script>
+        <script type="text/javascript" src="main.js"></script>
+    </head>
+    <body ng-controller="MyCtrl">
+        <div ui-grid="{ data: myData }" class="grid"></div>
+    </body>
+</html>
