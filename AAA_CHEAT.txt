@@ -85,6 +85,8 @@ var server = app.listen(8081, function () {
 Launch the html page
 C:\Users\vaibhav\Documents\GitHub\nggridtest\ui-grid\src\js\index.html
 
+UI Page, referring Angular, 3rd party Datagrid and a Controller
+
 <!doctype html>
 <html ng-app="myApp">  
     <head lang="en">
@@ -101,3 +103,21 @@ C:\Users\vaibhav\Documents\GitHub\nggridtest\ui-grid\src\js\index.html
         <div ui-grid="{ data: myData }" class="grid"></div>
     </body>
 </html>
+
+---CONTROLLER CALLING SERVICES via JSON
+
+var app = angular.module('myApp', ['ui.grid']);
+app.controller('MyCtrl', function($scope,$http) {
+console.log('hj');
+    $http.jsonp('http://localhost:8081?alt=json-in-script&callback=JSON_CALLBACK').
+       success(function(json) {
+             $scope.myData=json;
+			 $scope.gridOptions = { data: 'myData' };
+        });
+   // $scope.myData = [{name: "Vaibhav", age: 50},
+                    // {name: "Tiancum", age: 43},
+                    // {name: "Jacob", age: 27},
+                    // {name: "Nephi", age: 29},
+                    // {name: "Enos", age: 34}];
+    
+});
